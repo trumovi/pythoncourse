@@ -3,7 +3,7 @@ def number():
     sum = 0
     for i in a:
         sum += int(i)
-    print(sum)
+    return sum
 
 
 number()
