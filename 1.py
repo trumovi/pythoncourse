@@ -1,12 +1,12 @@
 def season():
     month = int(input("number: "))
     if month in [1, 2, 12]:
-        print('winter')
+        return 'winter'
     elif month in [3, 4, 5]:
-        print('spring')
+        return 'spring'
     elif month in [6, 7, 8]:
-        print('summer')
+        return 'summer'
     elif month in [9, 10, 11]:
-        print('fall')
+        return 'fall'
 
 season()
