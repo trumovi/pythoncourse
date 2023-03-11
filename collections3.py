@@ -1,17 +1,15 @@
 import json
-from collections import Counter
+import collections
 
 
 with open('RomeoAndJuliet.json', 'r', encoding='UTF-8') as d:
     data = json.load(d)
-chars = {}
+cnt = collections.Counter()
 for act in data["acts"]:
     for scene in act["scenes"]:
         for action in scene["action"]:
-            if action["character"] not in chars:
-                chars[action["character"]] = 1
-            else:
-                chars[action["character"]] += len(action['says'])
+            for line in action["says"]:
+                cnt[action['character']] += 1
 
-counts = Counter(chars)
-print(counts)
+
+print(cnt)
