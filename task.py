@@ -2,25 +2,25 @@ import xml.etree.ElementTree as ET
 
 class Wordform:
     def __init__(self, text, grammems):
-        self.text = text
-        self.grammems = grammems
+        self._text = text
+        self._grammems = grammems
 
 class Sentence:
     def __init__(self, text, words):
-        self.text = text
-        self.words = words
+        self._text = text
+        self._words = words
 
     def __getitem__(self, id):
-        return self.words[id]
+        return self._words[id]
 
     def __len__(self):
-        return len(self.words)
+        return len(self._words)
 
 
 
 class Corpus:
     def __init__(self, filename):
-        self.sentences = []
+        self._sentences = []
         tree = ET.parse(filename)
         root = tree.getroot()
         for sent in root.iter('sentence'):
@@ -32,22 +32,22 @@ class Corpus:
                 wordform = Wordform(text, grammems)
                 words.append(wordform)
             sentence = Sentence(source_text, words)
-            self.sentences.append(sentence)
+            self._sentences.append(sentence)
 
-    def __getitem__(self, id):
-        return self.sentences[id]
+    def get_item(self, id):
+        return self._sentences[id]
 
     def __len__(self):
-        return len(self.sentences)
+        return len(self._sentences)
 
     def get_wordform(self, sent_id, word_id):
-        print(self.sentences[sent_id].words[word_id])
+       return self._sentences[sent_id]._words[word_id]
 
     def get_grammems(self, sent_id, word_id):
-        print(self.sentences[sent_id].words[word_id].grammems)
+        return self._sentences[sent_id]._words[word_id].grammems
 
-    def print_sentence(self, sent_id):
-        print(self.sentences[sent_id].text)
+    def get_sentence(self, sent_id):
+        return self._sentences[sent_id]._text
 
 
 # corpus = Corpus("annot.opcorpora.no_ambig.xml")

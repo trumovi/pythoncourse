@@ -10,7 +10,7 @@ class Testik(unittest.TestCase):
         self.assertIsNotNone(self.corpus)
 
     def test_sentence_not_empty(self):
-        sentence = self.corpus.__getitem__(736)
+        sentence = self.corpus.get_item(736)
         self.assertNotEqual(len(sentence), 0)
 
 
