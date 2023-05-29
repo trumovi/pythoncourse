@@ -3,24 +3,28 @@ import xml.etree.ElementTree as ET
 class Wordform:
     def __init__(self, text, grammems):
         self._text = text
-        self._grammems = grammems
+        self.__grammems = grammems
+
+    def get_grammems(self):
+        return self.__grammems
+
 
 class Sentence:
     def __init__(self, text, words):
         self._text = text
-        self._words = words
+        self.__words = words
 
-    def __getitem__(self, id):
-        return self._words[id]
 
-    def __len__(self):
-        return len(self._words)
+    def get_word(self, id):
+        return self.__words[id]
 
+    def len(self):
+        return len(self.__words)
 
 
 class Corpus:
     def __init__(self, filename):
-        self._sentences = []
+        self.__sentences = []
         tree = ET.parse(filename)
         root = tree.getroot()
         for sent in root.iter('sentence'):
@@ -32,25 +36,24 @@ class Corpus:
                 wordform = Wordform(text, grammems)
                 words.append(wordform)
             sentence = Sentence(source_text, words)
-            self._sentences.append(sentence)
+            self.__sentences.append(sentence)
 
     def get_item(self, id):
-        return self._sentences[id]
+        return self.__sentences[id]
 
-    def __len__(self):
-        return len(self._sentences)
+    def len(self):
+        return len(self.__sentences)
 
     def get_wordform(self, sent_id, word_id):
-       return self._sentences[sent_id]._words[word_id]
+       return self.__sentences[sent_id].get_word(word_id)
 
     def get_grammems(self, sent_id, word_id):
-        return self._sentences[sent_id]._words[word_id].grammems
+        return self.__sentences[sent_id].get_word(word_id).get_grammems()
 
     def get_sentence(self, sent_id):
-        return self._sentences[sent_id]._text
+        return self.__sentences[sent_id]._text
 
 
-# corpus = Corpus("annot.opcorpora.no_ambig.xml")
-# corpus.get_wordform(73, 2)
-# corpus.get_grammems(23, 4)
-# corpus.print_sentence(98)
+corpus = Corpus("annot.opcorpora.no_ambig.xml")
+print(corpus.get_wordform(73, 2))
+print(corpus.get_grammems(23, 4))
